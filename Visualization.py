@@ -44,6 +44,8 @@ st.sidebar.download_button(
 # Initialize variables for entering and exiting the baking room
 entering_baking_room = 0
 out_baking_room = 0
+in_pallete = 0
+out_pallete = 0
 
 # Calculate the number of entries in the baking room with status "IN"
 if not filtered_data.empty:
@@ -54,6 +56,12 @@ if not filtered_data.empty:
 if not filtered_data.empty:
     out_data = filtered_data[filtered_data["Status"] == "OUT"]
     out_baking_room = out_data.shape[0] * 20
+
+if not filtered_data.empty:
+    in_pallete= in_data["ID pallete"].nunique()
+
+if not filtered_data.empty:
+    out_pallete= out_data["ID pallete"].nunique()
 
 # Initialize variables for total baked
 model_value = "N/A"
@@ -92,11 +100,17 @@ with col3:
 
 st.markdown("---")  # Horizontal line for separation
 
+st.markdown("<h2 style='text-align: center;'>Daily Progress</h2>", unsafe_allow_html=True)
+st.markdown("---")  # Horizontal line for separation
 col4, col5, col6 = st.columns(3)
 with col4:
-    st.metric(label="Entering Baking Room", value=format_number(entering_baking_room))
+    st.markdown("<h3>IN</h3>", unsafe_allow_html=True)
+    st.metric(label="Panels", value=format_number(entering_baking_room))
+    st.metric(label="Palette", value=format_number(in_pallete))
 with col5:
-    st.metric(label="Out From Baking Room", value=format_number(out_baking_room))
+    st.markdown("<h3>OUT</h3>", unsafe_allow_html=True)
+    st.metric(label="Panels", value=format_number(out_baking_room))
+    st.metric(label="Palette", value=format_number(out_pallete))
 with col6:
     st.metric(label="Baked", value=format_number(on_progress))
 
