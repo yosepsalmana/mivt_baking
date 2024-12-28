@@ -88,7 +88,12 @@ def format_number(num):
     return f"{num:,.0f}".replace(",", ".")  # Replace comma with dot for thousands separator
 
 # Display metrics
-st.metric(label="Model", value=model_value)
+col1, col2, col3 = st.columns(3)
+with col1:
+    st.metric(label="Model", value=model_value)
+with col3:
+    st.metric(label="Shipment Code", value="LDCWT")
+
 
 st.markdown("---")  # Horizontal line for separation
 
